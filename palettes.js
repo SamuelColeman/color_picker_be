@@ -1,6 +1,6 @@
 const palettes = [
   {
-    packageId: 1,
+    projectId: 1,
     name: 'cool colors',
     color1: '#668B8B',
     color2: '#B4CDCD',
@@ -9,7 +9,7 @@ const palettes = [
     color5: '#838B8B',
   },
   {
-    packageId: 1,
+    projectId: 1,
     name: 'cooler colors',
     color1: '#668B7B',
     color2: '#B8CDCD',
@@ -18,7 +18,7 @@ const palettes = [
     color5: '#938B9B',
   },
   {
-    packageId: 2,
+    projectId: 2,
     name: 'smart colors',
     color1: '#008B7B',
     color2: '#B8FFFF',
@@ -27,7 +27,7 @@ const palettes = [
     color5: '#998B1B',
   },
   {
-    packageId: 2,
+    projectId: 2,
     name: 'stupid colors',
     color1: '#111B7B',
     color2: '#B8AACD',

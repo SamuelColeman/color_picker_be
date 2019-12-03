@@ -1,10 +1,10 @@
 const projects = [
   {
-    packageId: 1,
+    projectId: 1,
     name: 'BYOB',
   },
   {
-    packageId: 2,
+    projectId: 2,
     name: 'Open bar',
   }
 ]
