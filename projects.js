@@ -8,3 +8,5 @@ const projects = [
     name: 'Open bar',
   }
 ]
+
+module.exports = projects;
