@@ -36,3 +36,5 @@ const palettes = [
     color5: '#278B1B',
   },
 ]
+
+module.exports = palettes;
