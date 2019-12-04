@@ -57,4 +57,16 @@ app.get('/api/v1/palettes', (request, response) => {
 		.catch(error => response.status(500).json({ error }))
 });
 
+app.get('/api/v1/palettes/:id', (request, response) => {
+  database('palettes').where('id', request.params.id).select()
+  	.then((palette) => {
+  		if (palette.length) {
+	  		response.status(200).json(palette)
+	  	} else {
+	  		response.status(404).json({ error: 'Palette Not Found'})
+	  	}
+  	})
+  	.catch(error => response.status(500).json({ error }))
+});
+
 module.exports = app;

@@ -74,4 +74,26 @@ describe('Server', () => {
   		expect(palettes.name).toEqual(expectedPalettes.name);
   	});
   });
+
+  describe('GET /api/v1/palettes/:id', () => {
+	 	it('should return a 200 and a specified palette', async () => {
+	 		const expectedPalette = await database('palettes').first();
+	 		const { id } = expectedPalette
+
+	 		const response = await request(app).get(`/api/v1/palettes/${id}`);
+	 		const palette = response.body[0];
+
+	 		expect(response.status).toBe(200);
+	 		expect(palette.name).toEqual(expectedPalette.name);
+	 	});
+
+	 	it('should return a 404 and the message "Palette Not Found"', async () => {
+	 		const invalidId = -1;
+
+	 		const response = await request(app).get(`/api/v1/palettes/${invalidId}`);
+
+	 		expect(response.status).toBe(404);
+	 		expect(response.body.error).toEqual('Palette Not Found');
+	 	});
+	});
 });
