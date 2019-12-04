@@ -27,4 +27,26 @@ describe('Server', () => {
   		expect(projects.name).toEqual(expectedProjects.name);
   	});
   });
+
+ 	describe('GET /api/v1/projects/:id', () => {
+	 	it('should return a 200 and a specified project', async () => {
+	 		const expectedProject = await database('projects').first();
+	 		const { id } = expectedProject
+
+	 		const response = await request(app).get(`/api/v1/projects/${id}`);
+	 		const project = response.body[0];
+
+	 		expect(response.status).toBe(200);
+	 		expect(project.name).toEqual(expectedProject.name);
+	 	});
+
+	 	it('should return a 404 and the message "Project Not Found"', async () => {
+	 		const invalidId = -1;
+
+	 		const response = await request(app).get(`/api/v1/projects/${invalidId}`);
+
+	 		expect(response.status).toBe(404);
+	 		expect(response.body.error).toEqual('Project Not Found');
+	 	});
+	});
 });

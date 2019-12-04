@@ -19,4 +19,16 @@ app.get('/api/v1/projects', (request, response) => {
 		.catch(error => response.status(500).json({ error }))
 });
 
+app.get('/api/v1/projects/:id', (request, response) => {
+  database('projects').where('id', request.params.id).select()
+  	.then((project) => {
+  		if (project.length) {
+	  		response.status(200).json(project)
+	  	} else {
+	  		response.status(404).json({ error: 'Project Not Found'})
+	  	}
+  	})
+  	.catch(error => response.status(500).json({ error }))
+});
+
 module.exports = app;
