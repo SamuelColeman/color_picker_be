@@ -69,4 +69,24 @@ app.get('/api/v1/palettes/:id', (request, response) => {
   	.catch(error => response.status(500).json({ error }))
 });
 
+app.post('/api/v1/palettes', (request, response) => {
+  const palette = request.body;
+
+  for (let requiredParameter of ['projectId', 'name', 'color1', 'color2', 'color3', 'color4', 'color5']) {
+    if (!palette[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { projectId: <Integer>, name: <String>, colors: <Strings> }. You're missing a "${requiredParameter}" property.` });
+    }
+  }
+
+  database('palettes').insert(palette, 'id')
+    .then(palette => {
+      response.status(201).json({ id: palette[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
+});
+
 module.exports = app;

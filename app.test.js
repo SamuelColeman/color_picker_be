@@ -96,4 +96,17 @@ describe('Server', () => {
 	 		expect(response.body.error).toEqual('Palette Not Found');
 	 	});
 	});
+
+	describe('POST /api/v1/palettes', () => {
+		it('should return a 201 and add a new palette to the db', async () => {
+			const newPalette = { projectId: 2, name: 'Sam Coleman', color1: '#FFFFFF', color2: '#FFFFFF', color3: '#FFFFFF', color4: '#FFFFFF', color5: '#FFFFFF' };
+
+	 		const response = await request(app).post('/api/v1/palettes').send(newPalette);
+	 		const palettes = await database('palettes').where('id', response.body.id).select();
+	 		const palette = palettes[0];
+
+	 		expect(response.status).toBe(201);
+	 		expect(palette.name).toEqual(newPalette.name);
+		});
+	});
 });
