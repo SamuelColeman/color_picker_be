@@ -31,4 +31,24 @@ app.get('/api/v1/projects/:id', (request, response) => {
   	.catch(error => response.status(500).json({ error }))
 });
 
+app.post('/api/v1/projects', (request, response) => {
+  const project = request.body;
+
+  for (let requiredParameter of ['projectId', 'name']) {
+    if (!project[requiredParameter]) {
+      return response
+        .status(422)
+        .send({ error: `Expected format: { projectId: <Integer>, name: <String> }. You're missing a "${requiredParameter}" property.` });
+    }
+  }
+
+  database('projects').insert(project, 'id')
+    .then(project => {
+      response.status(201).json({ id: project[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error });
+    })
+});
+
 module.exports = app;
