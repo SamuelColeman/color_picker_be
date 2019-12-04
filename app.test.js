@@ -62,4 +62,52 @@ describe('Server', () => {
 	 		expect(project.name).toEqual(newProject.name);
 		});
 	});
+
+	describe('GET /api/v1/palettes', () => {
+  	it('should return a 200 and all the palettes', async () => {
+  		const expectedPalettes = await database('palettes').select();
+
+  		const response = await request(app).get('/api/v1/palettes');
+  		const palettes = response.body;
+
+  		expect(response.status).toBe(200);
+  		expect(palettes.name).toEqual(expectedPalettes.name);
+  	});
+  });
+
+  describe('GET /api/v1/palettes/:id', () => {
+	 	it('should return a 200 and a specified palette', async () => {
+	 		const expectedPalette = await database('palettes').first();
+	 		const { id } = expectedPalette
+
+	 		const response = await request(app).get(`/api/v1/palettes/${id}`);
+	 		const palette = response.body[0];
+
+	 		expect(response.status).toBe(200);
+	 		expect(palette.name).toEqual(expectedPalette.name);
+	 	});
+
+	 	it('should return a 404 and the message "Palette Not Found"', async () => {
+	 		const invalidId = -1;
+
+	 		const response = await request(app).get(`/api/v1/palettes/${invalidId}`);
+
+	 		expect(response.status).toBe(404);
+	 		expect(response.body.error).toEqual('Palette Not Found');
+	 	});
+	});
+
+	describe('POST /api/v1/palettes', () => {
+		it('should return a 201 and add a new palette to the db', async () => {
+			const newPalette = { projectId: 2, name: 'Sam Coleman', color1: '#FFFFFF', color2: '#FFFFFF', color3: '#FFFFFF', color4: '#FFFFFF', color5: '#FFFFFF' };
+
+	 		const response = await request(app).post('/api/v1/palettes').send(newPalette);
+	 		const palettes = await database('palettes').where('id', response.body.id).select();
+	 		const palette = palettes[0];
+
+	 		expect(response.status).toBe(201);
+	 		expect(palette.name).toEqual(newPalette.name);
+		});
+	});
+
 });
