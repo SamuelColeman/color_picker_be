@@ -109,4 +109,5 @@ describe('Server', () => {
 	 		expect(palette.name).toEqual(newPalette.name);
 		});
 	});
+
 });
