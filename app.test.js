@@ -62,4 +62,16 @@ describe('Server', () => {
 	 		expect(project.name).toEqual(newProject.name);
 		});
 	});
+
+	describe('GET /api/v1/palettes', () => {
+  	it('should return a 200 and all the palettes', async () => {
+  		const expectedPalettes = await database('palettes').select();
+
+  		const response = await request(app).get('/api/v1/palettes');
+  		const palettes = response.body;
+
+  		expect(response.status).toBe(200);
+  		expect(palettes.name).toEqual(expectedPalettes.name);
+  	});
+  });
 });
