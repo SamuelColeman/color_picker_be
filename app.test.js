@@ -73,6 +73,14 @@ describe('Server', () => {
 	 		expect(response.status).toBe(202);
 	 		expect(project).toEqual(`Project ${projectId} deleted`);
 		});
+		it('should return a 404 and the message "Could not find project with id: "', async () => {
+	 		const invalidId = -1;
+
+	 		const response = await request(app).delete(`/api/v1/projects/${invalidId}`);
+
+	 		expect(response.status).toBe(404);
+	 		expect(response.body.error).toEqual(`Could not find project with id: ${invalidId}`);
+	 	});
 	});
 
 	describe('GET /api/v1/palettes', () => {
