@@ -38,7 +38,7 @@ app.post('/api/v1/projects', (request, response) => {
     if (!project[requiredParameter]) {
       return response
         .status(422)
-        .send({ error: `Expected format: { projectId: <Integer>, name: <String> }. You're missing a "${requiredParameter}" property.` });
+        .send({ error: `Expected format: { projectId: <Integer>, name: <String> }. You're missing a property.` });
     }
   }
 
@@ -106,7 +106,7 @@ app.post('/api/v1/palettes', (request, response) => {
     if (!palette[requiredParameter]) {
       return response
         .status(422)
-        .send({ error: `Expected format: { projectId: <Integer>, name: <String>, colors: <Strings> }. You're missing a "${requiredParameter}" property.` });
+        .send({ error: `Expected format: { projectId: <Integer>, name: <String>, colors: <Strings> }. You're missing a property.` });
     }
   }
 
