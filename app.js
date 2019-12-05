@@ -51,17 +51,18 @@ app.post('/api/v1/projects', (request, response) => {
     })
 });
 
-app.patch('/api/v1/projects/:id', (request, response) => {
-  const { id } = request.params;
-  const { name } = request.body
+app.patch('/api/v1/projects/:projectId', (request, response) => {
+  const { projectId } = request.params;
+  const { name } = request.body;
   database('projects')
-    .where({ id: id })
+    .where({ projectId: projectId })
     .update({ name: name })
     .then(project => {
-      if (!project[0]) {
-        response.status(404).json({ error: `No project found with id ${id}`})
+      if (!project) {
+        response.status(404).json({ error: `No project found with projectId ${projectId}`})
+      } else {
+        response.status(202).json({ message: 'Project renamed!'})
       }
-      response.status(202).json({ message: 'Project renamed!'})
     });
 });
 
