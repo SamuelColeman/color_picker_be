@@ -61,6 +61,15 @@ describe('Server', () => {
 	 		expect(response.status).toBe(201);
 	 		expect(project.name).toEqual(newProject.name);
 		});
+
+		it('should return a 422 and the message containing data types for required parameters', async () => {
+	 		const invalidName = 2;
+
+	 		const response = await request(app).post('/api/v1/projects');
+
+	 		expect(response.status).toBe(422);
+	 		expect(response.body.error).toEqual('Expected format: { projectId: <Integer>, name: <String> }. You\'re missing a property.');
+	 	});
 	});
 
 	describe('DELETE /api/v1/projects/:projectId', () => {
@@ -129,7 +138,7 @@ describe('Server', () => {
 	 		expect(palette.name).toEqual(newPalette.name);
 		});
 
-			it('should return a 422 and the message containing data types for required parameters', async () => {
+		it('should return a 422 and the message containing data types for required parameters', async () => {
 	 		const invalidName = 2;
 
 	 		const response = await request(app).post('/api/v1/palettes');
