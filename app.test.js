@@ -63,6 +63,18 @@ describe('Server', () => {
 		});
 	});
 
+	describe('DELETE /api/v1/projects/:projectId', () => {
+		it('should return a 202 and delete project from the db', async () => {
+			const expectedProject = await database('projects').first();
+	 		const { projectId } = expectedProject;
+
+	 		const response = await request(app).delete(`/api/v1/projects/${projectId}`);
+	 		const project = response.body;
+	 		expect(response.status).toBe(202);
+	 		expect(project).toEqual(`Project ${projectId} deleted`);
+		});
+	});
+
 	describe('GET /api/v1/palettes', () => {
   	it('should return a 200 and all the palettes', async () => {
   		const expectedPalettes = await database('palettes').select();
