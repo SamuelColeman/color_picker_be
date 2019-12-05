@@ -110,4 +110,17 @@ describe('Server', () => {
 		});
 	});
 
+	describe('PATCH /api/v1/projects/:id', () => {
+		it('Should return 202 and change a projects name', async () => {
+			const firstProject = await database('projects').first();
+			 const { id } = firstProject
+			 const name = 
+			 {
+				"name": "Dr. Drey"
+			 }
+			const response = await request(app).patch(`/api/v1/projects/${id}`).send(name)
+			expect(response.status).toBe(202);
+		})
+	})
+
 });

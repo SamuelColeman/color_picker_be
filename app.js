@@ -51,6 +51,23 @@ app.post('/api/v1/projects', (request, response) => {
     })
 });
 
+app.patch('/api/v1/projects/:id', (request, response) => {
+  const { id } = request.params;
+  const { name } = request.body
+  database('projects')
+    .where({ id: id })
+    .update({ name: name })
+    .then(project => {
+      if (!project[0]) {
+        response.status(404).send(
+          `Seriously, really, really, there is no id of ${id}`
+        )
+        // response.status(404).json({ error: `Seriously, really, really, there is no id of ${id}`})
+      }
+      response.status(202).json({ message: 'Project renamed!'})
+    });
+});
+
 app.get('/api/v1/palettes', (request, response) => {
 	database('palettes').select()
 		.then(palettes => response.status(200).json(palettes))
