@@ -129,4 +129,24 @@ describe('Server', () => {
 	 		expect(palette.name).toEqual(newPalette.name);
 		});
 	});
+
+	describe('DELETE /api/v1/palettes/:id', () => {
+		it('should return a 202 and delete palette from the db', async () => {
+			const expectedPalette = await database('palettes').first();
+	 		const { id } = expectedPalette;
+
+	 		const response = await request(app).delete(`/api/v1/palettes/${id}`);
+	 		const palette = response.body;
+	 		expect(response.status).toBe(202);
+	 		expect(palette).toEqual(`Palette ${id} deleted`);
+		});
+		it('should return a 404 and the message "Could not find palette with id: "', async () => {
+	 		const invalidId = -1;
+
+	 		const response = await request(app).delete(`/api/v1/palettes/${invalidId}`);
+
+	 		expect(response.status).toBe(404);
+	 		expect(response.body.error).toEqual(`Could not find palette with id: ${invalidId}`);
+	 	});
+	});
 });

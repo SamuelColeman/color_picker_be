@@ -119,4 +119,20 @@ app.post('/api/v1/palettes', (request, response) => {
     })
 });
 
+app.delete('/api/v1/palettes/:id', (request, response) => {
+	database('palettes').where('id', request.params.id).select().del()
+   	.then(palette => {
+    	if (palette) {
+        response.status(202).json(`Palette ${request.params.id} deleted`);
+      } else {
+        response.status(404).json({ 
+          error: `Could not find palette with id: ${request.params.id}`
+        })
+      }
+    })
+    .catch(error => {
+    	response.status(500).json({ error });
+    })
+});
+
 module.exports = app;
