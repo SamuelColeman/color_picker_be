@@ -51,6 +51,36 @@ app.post('/api/v1/projects', (request, response) => {
     })
 });
 
+app.patch('/api/v1/projects/:id', (request, response) => {
+  const { id } = request.params;
+  const { name } = request.body
+  database('projects')
+    .where({ id: id })
+    .update({ name: name })
+    .then(project => {
+      if (!project[0]) {
+        response.status(404).json({ error: `No project found with id ${id}`})
+      }
+      response.status(202).json({ message: 'Project renamed!'})
+    });
+});
+
+app.delete('/api/v1/projects/:projectId', (request, response) => {
+	database('projects').where('projectId', request.params.projectId).select().del()
+   	.then(project => {
+    	if (project) {
+        response.status(202).json(`Project ${request.params.projectId} deleted`);
+      } else {
+        response.status(404).json({ 
+          error: `Could not find project with id: ${request.params.projectId}`
+        })
+      }
+    })
+    .catch(error => {
+    	response.status(500).json({ error });
+    })
+});
+
 app.get('/api/v1/palettes', (request, response) => {
 	database('palettes').select()
 		.then(palettes => response.status(200).json(palettes))
