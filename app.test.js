@@ -129,6 +129,15 @@ describe('Server', () => {
 	 		expect(response.status).toBe(201);
 	 		expect(palette.name).toEqual(newPalette.name);
 		});
+
+			it('should return a 422 and the message containing data types for required parameters', async () => {
+	 		const invalidName = 2;
+
+	 		const response = await request(app).post('/api/v1/palettes');
+
+	 		expect(response.status).toBe(422);
+	 		expect(response.body.error).toEqual('Expected format: { projectId: <Integer>, name: <String>, colors: <Strings> }. You\'re missing a property.');
+	 	});
 	});
 
 	describe('DELETE /api/v1/palettes/:id', () => {
