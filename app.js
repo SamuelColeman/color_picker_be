@@ -66,6 +66,21 @@ app.patch('/api/v1/projects/:projectId', (request, response) => {
     });
 });
 
+app.patch('/api/v1/palettes/:id', (request, response) => {
+  const { id } = request.params;
+  const { color1 } = request.body;
+  database('palettes')
+    .where({ id: id })
+    .update({ color1: color1 })
+    .then(palette => {
+      if (!palette) {
+        response.status(404).json({ error: `No palette found with id ${id}`})
+      } else {
+        response.status(202).json({ message: 'Palette color reassigned!'})
+      }
+    });
+});
+
 app.delete('/api/v1/projects/:projectId', (request, response) => {
 	database('projects').where('projectId', request.params.projectId).select().del()
    	.then(project => {

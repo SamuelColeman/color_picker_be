@@ -168,4 +168,45 @@ describe('Server', () => {
 	 		expect(response.body.error).toEqual(`Could not find palette with id: ${invalidId}`);
 	 	});
 	});
+
+	describe('PATCH /api/v1/projects:projectId', () => {
+		it('should return a 202 and rename a project', async () => {
+			const newName = {
+				"name": "New Name"
+			}
+			const response = await request(app).patch(`/api/v1/projects/1`).send(newName);
+			expect(response.status).toBe(202)
+		});
+		it('should return a 404 and a message that there is no projectId', async () => {
+			const projectId = -1
+			const newName = {
+				"name": "New Name"
+			}
+			const response = await request(app).patch(`/api/v1/projects/${projectId}`).send(newName);
+			expect(response.status).toBe(404)
+			expect(response.body.error).toEqual(`No project found with projectId ${projectId}`);
+		})
+	})
+
+	describe('PATCH /api/v1/palettes:id', () => {
+		it('should return a 202 and change the color1 value of a palette', async () => {
+			const newColor = {
+				"color1": "#FBFBFB"
+			}
+			const expectedPalette = await database('palettes').first();
+	 		const { id } = expectedPalette
+			const response = await request(app).patch(`/api/v1/palettes/${id}`).send(newColor);
+			expect(response.status).toBe(202)
+
+		});
+		it('should return a 404 and a message it cant find the id', async () => {
+			const id = -1
+			const newColor = {
+				"color1": "#FBFBFB"
+			}
+			const response = await request(app).patch(`/api/v1/palettes/${id}`).send(newColor);
+			expect(response.status).toBe(404)
+			expect(response.body.error).toEqual(`No palette found with id ${id}`);
+		})
+	})
 });
