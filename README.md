@@ -4,11 +4,16 @@
 [Samuel Coleman](https://github.com/SamuelColeman)
 
 ### Summary:
-[live site]()
+[live site](https://color-picker-be.herokuapp.com)
+Custom built back-end that builds two tables: Projects and Palettes. Palettes are connected to Projects with a foreign key. 10 endpoints allow the user to access and manipulate the database as necessary.
 
-### Installation
+### Installation:
+- First fork this repo and clone down your own copy.  
+- Once cloned, run npm install and npm start in your terminal. In your browser visit localhost: 3001.  
+- Try out the endpoints using a program like Postman
 
 ### Tech Stack:
+This application utilizes: knex, express, ES6, node.js, cors and TravisCI. Deployed with Heroku.
 
 ### API Endpoints
 
