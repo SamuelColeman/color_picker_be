@@ -15,6 +15,9 @@ Custom built back-end that builds two tables: Projects and Palettes. Palettes ar
 ### Tech Stack:
 This application utilizes: knex, express, ES6, node.js, cors and TravisCI. Deployed with Heroku.
 
+### Story Board:
+[Project](https://github.com/SamuelColeman/color_picker_be/projects/1)
+
 ### API Endpoints
 
 <details>
